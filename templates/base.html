@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/htmx.org@1.8.6"></script>
+        <link rel="stylesheet" href="{% static 'recipes/recipes-htmx.css' %}" />
+    </head>
+    <body>
+
+        {% include "search/search-form.html" %}
+        
+        {% block content %} 
+        {% endblock %}
+    </body>
+
+    <script>
+        document.body.addEventListener("htmx:configRequest", (event)=>{
+            event.detail.headers['X_CSRFToken'] = '{{ csrf_token }}'
+        })
+    </script>
+</html>

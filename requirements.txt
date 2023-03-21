@@ -1,0 +1,13 @@
+Django>=4.1<4.2
+django-dotenv
+django-htmx==1.13.0
+gunicorn
+psycopg2-binary
+pint
+<<<<<<< HEAD
+django-storages
+boto3
+pillow
+requests
+=======
+>>>>>>> 2340deca2ad97b2a60abf5789b46e1e76f39564d
