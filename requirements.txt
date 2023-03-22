@@ -7,4 +7,3 @@ django-storages
 boto3
 pillow
 requests
-django-dotenv
