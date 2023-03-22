@@ -1,6 +1,83 @@
-name: djangodelights
-services:
-jobs:
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+databases:
+- engine: PG
+  name: db
+  num_nodes: 1
+  size: basic-xs
+  version: "12"
 envs:
+- key: DEBUG
+  scope: RUN_AND_BUILD_TIME
+  value: "0"
+- key: DJANGO_SUPERUSER_EMAIL
+  scope: RUN_AND_BUILD_TIME
+  value: olijwood@gmail.com
+- key: DJANGO_SUPERUSER_USERNAME
+  scope: RUN_AND_BUILD_TIME
+  value: olijwood
+- key: DJANGO_SECRET_KEY
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:dpqryruKGamgYy+HK+9sejuLmbRoCEWx:ro8Z/xWihKHfUI1evqjfjL6Yhw==]
+- key: POSTGRES_DB
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.DATABASE}
+- key: POSTGRES_USER
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.DATABASE}
+- key: POSTGRES_PASSWORD
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.PASSWORD}
+- key: POSTGRES_HOST
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.HOSTNAME}
+- key: POSTGRES_PORT
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.PORT}
+- key: DJANGO_ALLOWED_HOST
+  scope: RUN_AND_BUILD_TIME
+  value: django-delights-e7qmh.ondigitalocean.app
+- key: ALLOWED_HOSTS
+  scope: RUN_AND_BUILD_TIME
+  value: django-delights-e7qmh.ondigitalocean.app
+- key: AWS_ACCESS_KEY_ID
+  scope: RUN_AND_BUILD_TIME
+  value: DO00HQ7KTFCEMAP4HGKQ
+- key: AWS_SECRET_ACCESS_KEY
+  scope: RUN_AND_BUILD_TIME
+  value: RiN+BJsCG+C3wwW4F8Ns6m/SRrUqeSQi7T47End8qkU
+- key: AWS_BUCKET_NAME
+  scope: RUN_AND_BUILD_TIME
+  value: djangodelights
+- key: OCR_API_TOKEN_HEADER
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: EV[1:Sbjie+ipAuhw4vxAq9nFuqwMKhdNM9cs:kYL/ly8kzQJpLrRgTO0MhVA8DlGu2w==]
+- key: OCR_API_ENDPOINT
+  scope: RUN_AND_BUILD_TIME
+  value: https://ocr-microservice-gqmv4.ondigitalocean.app/
+name: djangodelights
+region: lon
+services:
+- environment_slug: python
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${db.DATABASE_URL}
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: Olijwood/djangodelights
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: djangodelights
+  routes:
+  - path: /
+  run_command: gunicorn --worker-tmp-dir /dev/shm trydjango.wsgi
+  source_dir: /
+
 
 
